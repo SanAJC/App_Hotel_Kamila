@@ -1,6 +1,5 @@
 from django.db import models
-from .huesped import Huesped
-
+from habitaciones.models import Huesped
 class Orden_Lavanderia(models.Model):
     ESTADOS = [
         ('en_espera', 'En espera'),
@@ -23,4 +22,3 @@ class Orden_Lavanderia(models.Model):
     def save(self, *args, **kwargs):
         self.valor_total = self.cantidad_prendas * self.valor_por_prenda
         super().save(*args, **kwargs)
-    

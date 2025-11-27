@@ -1,6 +1,39 @@
 from django.db import models
-from .habitacion import Habitacion
-from .huesped import Huesped
+
+class Huesped(models.Model):
+    primer_nombre = models.CharField(max_length=50)
+    segundo_nombre = models.CharField(max_length=50)
+    primer_apellido = models.CharField(max_length=50)
+    segundo_apellido = models.CharField(max_length=50)
+    cedula = models.CharField(max_length=15 , unique=True)
+    telefono = models.CharField(max_length=15)
+
+    class Meta:
+        verbose_name = 'Huesped'
+        verbose_name_plural = 'Huespedes'
+
+    def __str__(self):
+        return f"{self.primer_nombre} {self.segundo_nombre} {self.primer_apellido} {self.segundo_apellido}"
+
+class Habitacion(models.Model):
+    numero = models.CharField(max_length=10 , unique=True)
+    tiene_aire = models.BooleanField(default=True)
+    precio = models.DecimalField(max_digits=10, decimal_places=0)
+    disponible = models.BooleanField(default=True)
+    cantidad_personas = models.IntegerField(default=2)
+
+    class Meta:
+        verbose_name = 'Habitacion'
+        verbose_name_plural = 'Habitaciones'
+
+    def __str__(self):
+        estado = 'Disponible' if self.disponible else 'No Disponible'
+        aire = 'Aire' if self.tiene_aire else 'Ventilador'
+        return f"Habitacion {self.numero} - ({aire}) - Valor: {self.precio} - ( {estado} )"
+
+    def obtener_precio_dos_horas(self):
+        return 45000 if self.tiene_aire else 35000
+
 
 class Venta_Habitacion(models.Model):
     TIPO_ESTADIA = (

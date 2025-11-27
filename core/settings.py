@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',
+    'usuarios',
+    'habitaciones',
+    'productos',
+    'lavanderia',
+
 ]
 
 MIDDLEWARE = [
@@ -73,7 +77,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 #Metodo de autenticacion personalizado
-AUTH_USER_MODEL = 'app.Usuario'
+AUTH_USER_MODEL = 'usuarios.Usuario'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -132,6 +136,7 @@ DAISY_SETTINGS = {
     'SITE_TITLE': 'Hotel Kamila',
     'SITE_HEADER': 'Administracion',
     'INDEX_TITLE': 'Bienvenido a tu panel de control',
+    'SITE_LOGO': '',
 
 
     'THEME_LIST': [
@@ -140,4 +145,34 @@ DAISY_SETTINGS = {
         
     ],
     'THEME_DEFAULT': 'light',
-}   
+    
+    # Configuración de la barra lateral (Sidebar)
+    'APPS_REORDER': {
+        'auth': {
+            'icon': 'fa-solid fa-users-gear',
+            'name': 'Usuarios y Permisos',
+            'divider_title': 'Sistema',
+        },
+        'usuarios': {
+            'icon': 'fa-solid fa-user',
+            'name': 'Usuarios',
+            'divider_title': 'Administradores',
+        },
+        'habitaciones': {
+            'icon': 'fa-solid fa-bed',
+            'name': 'Habitaciones',
+            'divider_title': 'Habitaciones',
+        },
+        'productos': {
+            'icon': 'fa-solid fa-box',
+            'name': 'Productos',
+            'divider_title': 'Productos',
+        },
+        'lavanderia': {
+            'icon': 'fa-solid fa-shirt',
+            'name': 'Lavanderia',
+            'divider_title': 'Lavanderia',
+        },
+
+    },
+}
