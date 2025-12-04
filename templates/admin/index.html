@@ -1,0 +1,153 @@
+{% extends "admin/base_site.html" %}
+{% load static humanize i18n admin_urls %}
+
+{% block content %}
+<div class="p-1 space-y-4">
+    <!-- Banner de Bienvenida -->
+    <div class="card bg-base-100 shadow-xl overflow-hidden">
+        <div class="card-body p-0">
+            <div class="grid md:grid-cols-2 gap-4 items-center">
+                <!-- Texto de Bienvenida -->
+                <div class="p-8">
+                    <h1 class="text-3xl font-bold mb-4">
+                        ¡Bienvenido a tu panel de <span class="text-[#AB3632]">Hotel Kamila</span>!
+                    </h1>
+                    <p class="text-base-content/70 mb-3">
+                        Desde aquí puedes gestionar fácilmente todo lo relacionado con tu hotel.
+                    </p>
+                    <p class="text-base-content/70">
+                        Administra habitaciones, revisa las ventas activas, y mantén el control total de las
+                        operaciones.
+                    </p>
+                </div>
+                <!-- Imagen Decorativa -->
+                <div class="hidden md:block">
+                    <img src="{% static 'images/banner.png' %}" alt="Hotel Kamila Dashboard"
+                        class="w-full h-64 object-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cards de Estadísticas -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Habitaciones Disponibles -->
+        <div class="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-base-content/60 uppercase tracking-wide">Habitaciones Disponibles</p>
+                        <h3 class="text-4xl font-bold mt-2">{{ habitaciones_disponibles|default:0 }}</h3>
+                        <p class="text-xs text-base-content/50 mt-1">
+                            de {{ total_habitaciones|default:0 }} habitaciones
+                        </p>
+                    </div>
+                    <div class="text-4xl text-success mt-1">
+                        <i class="fa-solid fa-bed text-[#AB3632]"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Habitaciones Ocupadas -->
+        <div class="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-base-content/60 uppercase tracking-wide">Habitaciones Ocupadas</p>
+                        <h3 class="text-4xl font-bold mt-2">{{ habitaciones_ocupadas|default:0 }}</h3>
+                        <p class="text-xs text-base-content/50 mt-1">
+                            {% if total_habitaciones and total_habitaciones > 0 %}
+                            {% widthratio habitaciones_ocupadas total_habitaciones 100 %}% de ocupación
+                            {% else %}
+                            0% de ocupación
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="text-4xl text-error mt-1">
+                        <i class="fa-solid fa-door-closed text-[#AB3632]"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ventas del Día -->
+        <div class="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-base-content/60 uppercase tracking-wide">Ventas del Día</p>
+                        <h3 class="text-4xl font-bold mt-2">${{ ventas_del_dia|floatformat:0|intcomma }}</h3>
+                        <p class="text-xs text-base-content/50 mt-1">
+                            Ingresos de hoy
+                        </p>
+                    </div>
+                    <div class="text-4xl text-warning mt-1">
+                        <i class="fa-solid fa-dollar-sign text-[#AB3632]"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Historial de Acciones (Original de Django Daisy) -->
+    <div class="card bg-base-100 shadow-lg">
+        <div class="card-body">
+            <h2 class="card-title text-xl mb-4">
+                <i class="fa-solid fa-clock-rotate-left mr-2"></i>
+                Acciones Recientes
+            </h2>
+            <div class="overflow-x-auto">
+                {% load log %}
+                {% get_admin_log 10 as admin_log %}
+                {% if admin_log %}
+                <table class="table table-zebra w-full">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Usuario</th>
+                            <th>Acción</th>
+                            <th>Objeto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in admin_log %}
+                        <tr>
+                            <td class="text-sm">{{ entry.action_time|date:"d/m/Y H:i" }}</td>
+                            <td class="text-sm">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-user"></i>
+                                    {{ entry.user.get_username }}
+                                </div>
+                            </td>
+                            <td>
+                                {% if entry.is_addition %}
+                                <span class="badge badge-success badge-sm">Creó</span>
+                                {% elif entry.is_change %}
+                                <span class="badge badge-info badge-sm">Modificó</span>
+                                {% elif entry.is_deletion %}
+                                <span class="badge badge-error badge-sm">Eliminó</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-sm">
+                                {% if entry.content_type %}
+                                <span class="font-medium">{{ entry.content_type.name|capfirst }}</span>
+                                {% else %}
+                                <span class="text-base-content/50">N/A</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="alert alert-info">
+                    <i class="fa-solid fa-info-circle"></i>
+                    <span>No hay acciones recientes registradas.</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

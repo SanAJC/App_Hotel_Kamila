@@ -27,7 +27,7 @@ class Habitacion(models.Model):
         verbose_name_plural = 'Habitaciones'
 
     def __str__(self):
-        estado = 'Disponible' if self.disponible else 'No Disponible'
+        estado = 'Disponible' if self.disponible else 'Ocupada'
         aire = 'Aire' if self.tiene_aire else 'Ventilador'
         return f"Habitacion {self.numero} - ({aire}) - Valor: {self.precio} - ( {estado} )"
 
