@@ -21,7 +21,7 @@ class HabitacionAdmin(admin.ModelAdmin):
 class Venta_HabitacionAdmin(admin.ModelAdmin):
     list_display = ('habitacion', 'huesped', 'tipo_estadia', 'precio_pagado', 'fecha_entrada', 'fecha_salida')
     list_filter = ('habitacion', 'huesped', 'tipo_estadia', 'precio_pagado', 'fecha_entrada', 'fecha_salida')
-    search_fields = ('habitacion', 'huesped', 'tipo_estadia', 'precio_pagado', 'fecha_entrada', 'fecha_salida')
+    search_fields = ('habitacion__numero', 'huesped__primer_nombre', 'huesped__primer_apellido')
     ordering = ('habitacion',)
 
 

@@ -158,6 +158,7 @@ DAISY_SETTINGS = {
             'icon': 'fa-solid fa-users-gear',
             'name': 'Usuarios y Permisos',
             'divider_title': 'Sistema',
+            'hide': True,  # Ocultar del sidebar
         },
         'usuarios': {
             'icon': 'fa-solid fa-user',
