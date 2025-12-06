@@ -61,8 +61,33 @@ class Usuario(AbstractBaseUser ,PermissionsMixin):
         return self.email
 
     def has_perm(self, perm, obj=None):
-        return self.is_admin
+        # Superadmins y admins tienen todos los permisos
+        if self.is_superadmin or self.is_admin:
+            return True
+        
+        # Gerentes tienen todos los permisos
+        if self.rol == 'gerente':
+            return True
+            
+        # Recepcionistas no pueden gestionar usuarios
+        if self.rol == 'recepcionista' and 'usuarios' in perm:
+            return False
+            
+        return True
 
     def has_module_perms(self, app_label):
+        # Superadmins y admins tienen acceso a todos los módulos
+        if self.is_superadmin or self.is_admin:
+            return True
+        
+        # Gerentes tienen acceso a todos los módulos
+        if self.rol == 'gerente':
+            return True
+        
+        # Recepcionistas NO pueden ver el módulo de usuarios
+        if self.rol == 'recepcionista' and app_label == 'usuarios':
+            return False
+            
+        # Para otros módulos, los recepcionistas tienen acceso
         return True
 

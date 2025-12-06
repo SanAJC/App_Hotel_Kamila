@@ -1,0 +1,25 @@
+{% load i18n static %}
+
+<div id="toolbar">
+    <form id="changelist-search" method="get">
+        <div class="join">
+            <input type="text" class="input input-bordered input-sm join-item w-full max-w-md" size="40"
+                name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" autofocus placeholder="Buscar...">
+            <button type="submit" class="btn btn-sm btn-primary join-item">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+
+        {% if show_result_count %}
+        <span class="text-sm ml-2">
+            {{ cl.result_count }} {% if cl.result_count == 1 %}resultado{% else %}resultados{% endif %}
+        </span>
+        {% endif %}
+
+        {% for k, v in cl.params.items %}
+        {% if k != search_var %}
+        <input type="hidden" name="{{ k }}" value="{{ v }}">
+        {% endif %}
+        {% endfor %}
+    </form>
+</div>

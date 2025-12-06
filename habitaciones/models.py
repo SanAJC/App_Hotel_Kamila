@@ -62,12 +62,15 @@ class Venta_Habitacion(models.Model):
 
 
     def save(self, *args, **kwargs):
+        # Manejar el valor de extras (puede ser None)
+        extras_valor = self.extras if self.extras is not None else 0
+        
         if self.tipo_estadia == 'dos_horas':
-            self.precio_pagado = self.habitacion.obtener_precio_dos_horas() + self.extras or 0
+            self.precio_pagado = self.habitacion.obtener_precio_dos_horas() + extras_valor
             self.habitacion.disponible = False
             self.habitacion.save()
         else:
-            self.precio_pagado = self.habitacion.precio + self.extras or 0
+            self.precio_pagado = self.habitacion.precio + extras_valor
             self.habitacion.disponible = False
             self.habitacion.save()
         super().save(*args, **kwargs)
