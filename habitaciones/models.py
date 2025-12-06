@@ -1,12 +1,12 @@
 from django.db import models
 
 class Huesped(models.Model):
-    primer_nombre = models.CharField(max_length=50)
-    segundo_nombre = models.CharField(max_length=50)
-    primer_apellido = models.CharField(max_length=50)
-    segundo_apellido = models.CharField(max_length=50)
-    cedula = models.CharField(max_length=15 , unique=True)
-    telefono = models.CharField(max_length=15)
+    primer_nombre = models.CharField(max_length=50, null=True, blank=True)
+    segundo_nombre = models.CharField(max_length=50, null=True, blank=True)
+    primer_apellido = models.CharField(max_length=50, null=True, blank=True)
+    segundo_apellido = models.CharField(max_length=50, null=True, blank=True)
+    cedula = models.CharField(max_length=15 , unique=True, null=True, blank=True)
+    telefono = models.CharField(max_length=15, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Huesped'
@@ -64,13 +64,17 @@ class Venta_Habitacion(models.Model):
     def save(self, *args, **kwargs):
         # Manejar el valor de extras (puede ser None)
         extras_valor = self.extras if self.extras is not None else 0
+
+        if self.precio_pagado is None:
+
+            if self.tipo_estadia == 'dos_horas':
+                self.precio_pagado = self.habitacion.obtener_precio_dos_horas() + extras_valor
+                self.habitacion.disponible = False
+                self.habitacion.save()
+            else:
+                self.precio_pagado = self.habitacion.precio + extras_valor
+                self.habitacion.disponible = False
+            self.habitacion.save()
+        super().save(*args, **kwargs)   
         
-        if self.tipo_estadia == 'dos_horas':
-            self.precio_pagado = self.habitacion.obtener_precio_dos_horas() + extras_valor
-            self.habitacion.disponible = False
-            self.habitacion.save()
-        else:
-            self.precio_pagado = self.habitacion.precio + extras_valor
-            self.habitacion.disponible = False
-            self.habitacion.save()
-        super().save(*args, **kwargs)
+        
