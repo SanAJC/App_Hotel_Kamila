@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'habitaciones',
     'productos',
     'lavanderia',
+    'web',
 
 ]
 

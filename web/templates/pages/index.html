@@ -1,0 +1,336 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Header / Navegación -->
+<nav class="fixed w-full bg-white shadow-md z-50">
+    <div class="container mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <div class="text-2xl font-bold">
+                Hotel <span class="text-brand-red">Kamila</span>
+            </div>
+
+            <!-- Menú de navegación -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#inicio" class="text-gray-700 hover:text-brand-red transition">Inicio</a>
+                <a href="#habitaciones" class="text-gray-700 hover:text-brand-red transition">Habitaciones</a>
+                <a href="#nosotros" class="text-gray-700 hover:text-brand-red transition">Nosotros</a>
+                <a href="#contacto" class="text-gray-700 hover:text-brand-red transition">Contacto</a>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="inicio" class="relative h-screen flex items-center justify-center text-white">
+    <!-- Imagen de fondo (temporalmente usamos un placeholder) -->
+    <div class="absolute inset-0 hero-overlay">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920" alt="Hotel Kamila"
+            class="w-full h-full object-cover">
+    </div>
+
+    <!-- Contenido del Hero -->
+    <div class="relative z-10 text-center px-4">
+        <p class="text-sm uppercase tracking-widest mb-4">BIENVENIDO A</p>
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">Hotel Kamila</h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+            Tu hogar lejos de casa. Descubre el confort y la elegancia en cada rincón de nuestro hotel.
+        </p>
+
+        <!-- Botones CTA -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#habitaciones"
+                class="bg-brand-red text-white px-8 py-3 rounded hover:bg-red-700 transition font-semibold">
+                Ver Habitaciones
+            </a>
+            <a href="#nosotros"
+                class="bg-white text-gray-800 px-8 py-3 rounded hover:bg-gray-100 transition font-semibold">
+                Conócenos
+            </a>
+        </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div class="w-8 h-12 border-2 border-white rounded-full flex justify-center">
+            <div class="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Habitaciones -->
+<section id="habitaciones" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <p class="text-brand-red uppercase tracking-widest text-sm mb-2">ALOJAMIENTO</p>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Nuestras Habitaciones</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Cada habitación ha sido diseñada pensando en tu comodidad, combinando elegancia y funcionalidad.
+            </p>
+        </div>
+
+        <!-- Carrusel de habitaciones -->
+        <div class="relative">
+            <div class="grid md:grid-cols-3 gap-8" id="rooms-container">
+                <!-- Suite Ejecutiva -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600"
+                            alt="Suite Ejecutiva" class="w-full h-64 object-cover">
+                        <span
+                            class="absolute top-4 right-4 bg-brand-red text-white px-4 py-2 rounded-full text-sm font-semibold">
+                            Desde $120/noche
+                        </span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Suite Ejecutiva</h3>
+                        <p class="text-gray-600 mb-4">
+                            Amplia suite con sala de estar, ideal para viajes de negocios o estancias prolongadas.
+                        </p>
+
+                        <!-- Características -->
+                        <div class="flex items-center gap-4 mb-6 text-gray-700 text-sm">
+                            <span><i class="fas fa-user"></i> 2 personas</span>
+                            <span><i class="fas fa-bed"></i> 1 cama king</span>
+                            <span><i class="fas fa-wifi"></i> WiFi</span>
+                        </div>
+
+                        <button
+                            class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold">
+                            Reservar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Habitación Doble -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600"
+                            alt="Habitación Doble" class="w-full h-64 object-cover">
+                        <span
+                            class="absolute top-4 right-4 bg-brand-red text-white px-4 py-2 rounded-full text-sm font-semibold">
+                            Desde $85/noche
+                        </span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Habitación Doble</h3>
+                        <p class="text-gray-600 mb-4">
+                            Perfecta para parejas o amigos, con dos camas cómodas y vista a la ciudad.
+                        </p>
+
+                        <div class="flex items-center gap-4 mb-6 text-gray-700 text-sm">
+                            <span><i class="fas fa-user"></i> 2 personas</span>
+                            <span><i class="fas fa-bed"></i> 2 camas individuales</span>
+                            <span><i class="fas fa-wifi"></i> WiFi</span>
+                        </div>
+
+                        <button
+                            class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold">
+                            Reservar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Habitación Individual -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600"
+                            alt="Habitación Individual" class="w-full h-64 object-cover">
+                        <span
+                            class="absolute top-4 right-4 bg-brand-red text-white px-4 py-2 rounded-full text-sm font-semibold">
+                            Desde $60/noche
+                        </span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Habitación Individual</h3>
+                        <p class="text-gray-600 mb-4">
+                            Acogedora y funcional, diseñada para el viajero que busca comodidad.
+                        </p>
+
+                        <div class="flex items-center gap-4 mb-6 text-gray-700 text-sm">
+                            <span><i class="fas fa-user"></i> 1 persona</span>
+                            <span><i class="fas fa-bed"></i> 1 cama queen</span>
+                            <span><i class="fas fa-wifi"></i> WiFi</span>
+                        </div>
+
+                        <button
+                            class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold">
+                            Reservar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Link para ver todas las habitaciones -->
+            <div class="text-center mt-8">
+                <a href="#" class="text-brand-red font-semibold hover:underline inline-flex items-center gap-2">
+                    Ver todas las habitaciones <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección Sobre Nosotros + Mapa -->
+<section id="nosotros" class="py-20">
+    <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Texto sobre nosotros -->
+            <div>
+                <p class="text-brand-red uppercase tracking-widest text-sm mb-2">SOBRE NOSOTROS</p>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+                    Una experiencia única en hospitalidad
+                </h2>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    Hotel Kamila nació con la visión de ofrecer un espacio donde cada huésped se sienta como en casa.
+                    Con más de 15 años de experiencia en el sector hotelero, nos hemos consolidado como uno de los
+                    destinos preferidos por viajeros de negocios y turistas.
+                </p>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Nuestra ubicación privilegiada, combinada con instalaciones modernas y un equipo comprometido con
+                    la excelencia, garantiza que cada estancia sea memorable. Te invitamos a descubrir por qué nuestros
+                    huéspedes siempre regresan.
+                </p>
+
+                <!-- Servicios -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-brand-red">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="font-medium text-gray-800">Servicio 5 estrellas</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-brand-red">
+                            <i class="fas fa-mug-hot"></i>
+                        </div>
+                        <span class="font-medium text-gray-800">Desayuno incluido</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-brand-red">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <span class="font-medium text-gray-800">Estacionamiento gratuito</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-brand-red">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <span class="font-medium text-gray-800">Restaurante propio</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapa -->
+            <div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Nuestra Ubicación</h3>
+                <p class="text-gray-600 mb-4">Av. Principal 123, Centro Histórico</p>
+
+                <!-- Google Maps iframe como placeholder, reemplaza con tus coordenadas reales -->
+                <div class="rounded-lg overflow-hidden shadow-lg h-96">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d-74.0!3d4.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNMKwMzYnMDAuMCJOIDc0wrAwMCcwMC4wIlc!5e0!3m2!1ses!2s!4v1234567890"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="contacto" class="bg-brand-dark text-gray-300 py-16">
+    <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-3 gap-12 mb-8">
+            <!-- Información del hotel -->
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-4">
+                    Hotel <span class="text-brand-red">Kamila</span>
+                </h3>
+                <p class="mb-6">
+                    Tu hogar lejos de casa. Ofrecemos una experiencia única de hospedaje con las mejores
+                    instalaciones y servicio personalizado.
+                </p>
+
+                <!-- Redes sociales -->
+                <div class="flex gap-4">
+                    <a href="#"
+                        class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-brand-red transition">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#"
+                        class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-brand-red transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#"
+                        class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-brand-red transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Enlaces rápidos -->
+            <div>
+                <h4 class="text-xl font-semibold text-white mb-4">Enlaces Rápidos</h4>
+                <ul class="space-y-2">
+                    <li><a href="#inicio" class="hover:text-brand-red transition">Inicio</a></li>
+                    <li><a href="#habitaciones" class="hover:text-brand-red transition">Habitaciones</a></li>
+                    <li><a href="#nosotros" class="hover:text-brand-red transition">Nosotros</a></li>
+                    <li><a href="#contacto" class="hover:text-brand-red transition">Contacto</a></li>
+                </ul>
+            </div>
+
+            <!-- Información de contacto -->
+            <div>
+                <h4 class="text-xl font-semibold text-white mb-4">Contacto</h4>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-phone text-brand-red"></i>
+                        <span>+52 (55) 1234-5678</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-envelope text-brand-red"></i>
+                        <span>reservas@hotelkamila.com</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-map-marker-alt text-brand-red"></i>
+                        <span>Av. Principal 123, Centro Histórico</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-clock text-brand-red"></i>
+                        <span>Recepción 24 horas</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
+            <p>© 2025 Hotel Kamila. Todos los derechos reservados.</p>
+            <div class="mt-2 space-x-4">
+                <a href="#" class="hover:text-brand-red transition">Política de Privacidad</a>
+                <span>|</span>
+                <a href="#" class="hover:text-brand-red transition">Términos y Condiciones</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Script para smooth scroll -->
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}
