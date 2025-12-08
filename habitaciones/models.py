@@ -77,4 +77,7 @@ class Venta_Habitacion(models.Model):
             self.habitacion.save()
         super().save(*args, **kwargs)   
         
+        if self.fecha_salida is not None:
+            self.habitacion.disponible = True
+            self.habitacion.save()
         
