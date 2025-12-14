@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('web.urls')),  # Landing page en la raíz
 ]
 
-# Servir archivos estáticos en modo desarrollo
+# Servir archivos estáticos y media en modo desarrollo
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

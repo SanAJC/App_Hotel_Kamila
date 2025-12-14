@@ -21,6 +21,7 @@ class Habitacion(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=0)
     disponible = models.BooleanField(default=True)
     cantidad_personas = models.IntegerField(default=2)
+    imagen = models.ImageField(upload_to='habitaciones/', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Habitacion'

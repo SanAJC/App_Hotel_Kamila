@@ -4,7 +4,7 @@
 {% block content %}
 <!-- Header / Navegación -->
 <nav class="fixed w-full bg-white shadow-md z-50">
-    <div class="container mx-auto px-4 py-4">
+    <div class="container mx-auto px-5 py-5">
         <div class="flex items-center justify-between">
             <!-- Logo -->
             <div class="text-2xl font-bold">
@@ -25,13 +25,13 @@
 
 <!-- Hero Section -->
 <section id="inicio" class="relative h-screen flex items-center justify-center text-white">
-    
+
     <div class="absolute inset-0 hero-overlay">
         <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920" alt="Hotel Kamila"
             class="w-full h-full object-cover">
     </div>
 
-    
+
     <div class="relative z-10 text-center px-4">
         <p class="text-sm uppercase tracking-widest mb-4">BIENVENIDO A</p>
         <h1 class="text-5xl md:text-7xl font-bold mb-6">Hotel Kamila</h1>
@@ -39,7 +39,7 @@
             Tu hogar lejos de casa. Descubre el confort y la elegancia en cada rincón de nuestro hotel.
         </p>
 
-        
+
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="#habitaciones"
                 class="bg-brand-red text-white px-8 py-3 rounded hover:bg-red-700 transition font-semibold">
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    
+
     <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
         <div class="w-8 h-12 border-2 border-white rounded-full flex justify-center">
             <div class="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
@@ -74,98 +74,75 @@
         <!-- Carrusel de habitaciones -->
         <div class="relative">
             <div class="grid md:grid-cols-3 gap-8" id="rooms-container">
-                <!-- Suite Ejecutiva -->
+                {% if habitaciones %}
+                {% for habitacion in habitaciones %}
                 <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
                     <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600"
-                            alt="Suite Ejecutiva" class="w-full h-64 object-cover">
-                        <span
-                            class="absolute top-4 right-4 bg-brand-red text-white px-4 py-2 rounded-full text-sm font-semibold">
-                            Desde $120/noche
-                        </span>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2">Suite Ejecutiva</h3>
-                        <p class="text-gray-600 mb-4">
-                            Amplia suite con sala de estar, ideal para viajes de negocios o estancias prolongadas.
-                        </p>
-
-                        
-                        <div class="flex items-center gap-4 mb-6 text-gray-700 text-sm">
-                            <span><i class="fas fa-user"></i> 2 personas</span>
-                            <span><i class="fas fa-bed"></i> 1 cama king</span>
-                            <span><i class="fas fa-wifi"></i> WiFi</span>
-                        </div>
-
-                        <button
-                            class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold">
-                            Reservar
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Habitación Doble -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
-                    <div class="relative">
+                        {% if habitacion.imagen %}
+                        <img src="{{ habitacion.imagen.url }}" alt="Habitación {{ habitacion.numero }}"
+                            class="w-full h-64 object-cover">
+                        {% else %}
                         <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600"
-                            alt="Habitación Doble" class="w-full h-64 object-cover">
+                            alt="Habitación {{ habitacion.numero }}" class="w-full h-64 object-cover">
+                        {% endif %}
+
                         <span
                             class="absolute top-4 right-4 bg-brand-red text-white px-4 py-2 rounded-full text-sm font-semibold">
-                            Desde $85/noche
+                            ${{ habitacion.precio|floatformat:0 }}/noche
                         </span>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2">Habitación Doble</h3>
+                        <h3 class="text-2xl font-bold mb-2">Habitación {{ habitacion.numero }}</h3>
                         <p class="text-gray-600 mb-4">
-                            Perfecta para parejas o amigos, con dos camas cómodas y vista a la ciudad.
+                            {% if habitacion.cantidad_personas == 1 %}
+                            Habitación individual con todas las comodidades.
+                            {% elif habitacion.cantidad_personas == 2 %}
+                            Perfecta para parejas o amigos.
+                            {% else %}
+                            Amplia habitación para grupos o familias.
+                            {% endif %}
                         </p>
 
+                        <!-- Características -->
                         <div class="flex items-center gap-4 mb-6 text-gray-700 text-sm">
-                            <span><i class="fas fa-user"></i> 2 personas</span>
-                            <span><i class="fas fa-bed"></i> 2 camas individuales</span>
+                            <span><i class="fas fa-user"></i> {{ habitacion.cantidad_personas }} 
+                                {% if habitacion.cantidad_personas == 1 %}
+                                persona
+                                {% else %}
+                                personas
+                                {% endif %}
+                            </span>
+                            <span>
+                                {% if habitacion.disponible %}
+                                <i class="fas fa-check-circle text-green-500"></i> Disponible
+                                {% else %}
+                                <i class="fas fa-times-circle text-red-500"></i> Ocupada
+                                {% endif %}
+                            </span>
                             <span><i class="fas fa-wifi"></i> WiFi</span>
                         </div>
 
                         <button
-                            class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold">
-                            Reservar
+                            class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold"
+                            {% if not habitacion.disponible %}disabled
+                            style="background-color: #ccc; cursor: not-allowed;" {% endif %}>
+                            {% if habitacion.disponible %}Reservar{% else %}No Disponible{% endif %}
                         </button>
                     </div>
                 </div>
-
-                <!-- Habitación Individual -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600"
-                            alt="Habitación Individual" class="w-full h-64 object-cover">
-                        <span
-                            class="absolute top-4 right-4 bg-brand-red text-white px-4 py-2 rounded-full text-sm font-semibold">
-                            Desde $60/noche
-                        </span>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2">Habitación Individual</h3>
-                        <p class="text-gray-600 mb-4">
-                            Acogedora y funcional, diseñada para el viajero que busca comodidad.
-                        </p>
-
-                        <div class="flex items-center gap-4 mb-6 text-gray-700 text-sm">
-                            <span><i class="fas fa-user"></i> 1 persona</span>
-                            <span><i class="fas fa-bed"></i> 1 cama queen</span>
-                            <span><i class="fas fa-wifi"></i> WiFi</span>
-                        </div>
-
-                        <button
-                            class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold">
-                            Reservar
-                        </button>
-                    </div>
+                {% endfor %}
+                {% else %}
+                <div class="col-span-3 text-center py-16">
+                    <i class="fas fa-bed text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-600">No hay habitaciones registradas.</p>
                 </div>
+                {% endif %}
             </div>
 
             <!-- Link para ver todas las habitaciones -->
             <div class="text-center mt-8">
-                <a href="#" class="text-brand-red font-semibold hover:underline inline-flex items-center gap-2">
+                <a href="{% url 'habitaciones' %}"
+                    class="text-brand-red font-semibold hover:underline inline-flex items-center gap-2">
                     Ver todas las habitaciones <i class="fas fa-arrow-right"></i>
                 </a>
             </div>

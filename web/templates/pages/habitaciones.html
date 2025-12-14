@@ -1,0 +1,210 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Header / Navegación -->
+<nav class="fixed w-full bg-white shadow-md z-50">
+    <div class="container mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+            <div class="text-2xl font-bold">
+                <a href="{% url 'index' %}">Hotel <span class="text-brand-red">Kamila</span></a>
+            </div>
+
+            <div class="hidden md:flex space-x-8">
+                <a href="{% url 'index' %}" class="text-gray-700 hover:text-brand-red transition">Inicio</a>
+                <a href="{% url 'habitaciones' %}" class="text-brand-red font-semibold">Habitaciones</a>
+                <a href="{% url 'index' %}#nosotros" class="text-gray-700 hover:text-brand-red transition">Nosotros</a>
+                <a href="{% url 'index' %}#contacto" class="text-gray-700 hover:text-brand-red transition">Contacto</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Espacio para el nav fixed -->
+<div class="h-20"></div>
+
+<!-- Sección de Habitaciones -->
+<section class="py-20 bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <p class="text-brand-red uppercase tracking-widest text-sm mb-2">ALOJAMIENTO</p>
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Nuestras Habitaciones</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Encuentra la habitación perfecta para tu estancia. Todas incluyen WiFi gratuito, aire acondicionado y
+                servicio de limpieza diario.
+            </p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar de Filtros -->
+            <div class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-lg p-6 sticky top-24">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i class="fas fa-sliders-h"></i>
+                        Filtros
+                    </h3>
+
+                    <form method="get" id="filtros-form">
+                        <!-- Capacidad de personas -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-3">Capacidad de personas</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button type="button" onclick="setFilter('capacidad', '1')"
+                                    class="filtro-btn px-4 py-2 border rounded hover:bg-brand-red hover:text-white transition">
+                                    1+ persona
+                                </button>
+                                <button type="button" onclick="setFilter('capacidad', '2')"
+                                    class="filtro-btn px-4 py-2 border rounded hover:bg-brand-red hover:text-white transition">
+                                    2+ personas
+                                </button>
+                                <button type="button" onclick="setFilter('capacidad', '3')"
+                                    class="filtro-btn px-4 py-2 border rounded hover:bg-brand-red hover:text-white transition">
+                                    3+ personas
+                                </button>
+                                <button type="button" onclick="setFilter('capacidad', '4')"
+                                    class="filtro-btn px-4 py-2 border rounded hover:bg-brand-red hover:text-white transition">
+                                    4+ personas
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Rango de precio -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-3">Rango de precio (por
+                                noche)</label>
+                            <div class="flex gap-2 items-center">
+                                <input type="number" name="precio_min" placeholder="Mín"
+                                    class="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-brand-red">
+                                <span>-</span>
+                                <input type="number" name="precio_max" placeholder="Máx"
+                                    class="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-brand-red">
+                            </div>
+                        </div>
+
+                        <!-- Disponibilidad -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-3">Disponibilidad</label>
+                            <select name="disponible"
+                                class="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-brand-red">
+                                <option value="">Todas</option>
+                                <option value="true">Solo disponibles</option>
+                                <option value="false">Solo ocupadas</option>
+                            </select>
+                        </div>
+
+                        <input type="hidden" name="capacidad" id="capacidad-input">
+
+                        <button type="submit"
+                            class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold">
+                            Aplicar Filtros
+                        </button>
+                    </form>
+
+                    <!-- Resultado del filtro -->
+                    <div class="mt-4 text-sm text-gray-600 text-center">
+                        Mostrando <span class="font-bold text-brand-red">{{ total_habitaciones }}</span>
+                        {% if total_habitaciones == 1 %}
+                        habitación
+                        {% else %}
+                        habitaciones
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid de Habitaciones -->
+            <div class="lg:w-3/4">
+                {% if habitaciones %}
+                <div class="grid md:grid-cols-2 gap-6">
+                    {% for habitacion in habitaciones %}
+                    <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
+                        <div class="relative">
+                            {% if habitacion.imagen %}
+                            <img src="{{ habitacion.imagen.url }}" alt="Habitación {{ habitacion.numero }}"
+                                class="w-full h-64 object-cover">
+                            {% else %}
+                            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600"
+                                alt="Habitación {{ habitacion.numero }}" class="w-full h-64 object-cover">
+                            {% endif %}
+
+                            <span
+                                class="absolute top-4 right-4 bg-brand-red text-white px-4 py-2 rounded-full text-sm font-semibold">
+                                ${{ habitacion.precio|floatformat:0 }}/noche
+                            </span>
+
+                            <!-- Badge de disponibilidad -->
+                            {% if habitacion.disponible %}
+                            <span
+                                class="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                                <i class="fas fa-check-circle"></i> Disponible
+                            </span>
+                            {% else %}
+                            <span
+                                class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                                <i class="fas fa-times-circle"></i> Ocupada
+                            </span>
+                            {% endif %}
+                        </div>
+
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Habitación {{ habitacion.numero }}</h3>
+                            <p class="text-gray-600 mb-4">
+                                {% if habitacion.cantidad_personas == 1 %}
+                                Habitación individual con todas las comodidades.
+                                {% elif habitacion.cantidad_personas == 2 %}
+                                Perfecta para parejas o amigos.
+                                {% else %}
+                                Amplia habitación para grupos o familias.
+                                {% endif %}
+                            </p>
+
+                            <!-- Características -->
+                            <div class="flex items-center gap-4 mb-6 text-gray-700 text-sm">
+                                <span><i class="fas fa-user"></i> {{ habitacion.cantidad_personas }} 
+                                    {% if habitacion.cantidad_personas == 1 %}
+                                    persona
+                                    {% else %}
+                                    personas
+                                    {% endif %}
+                                </span>
+                                <span>
+                                    <i class="fas fa-wind"></i>
+                                    {% if habitacion.tiene_aire %}Aire{% else %}Ventilador{% endif %}
+                                </span>
+                                <span><i class="fas fa-wifi"></i> WiFi</span>
+                            </div>
+
+                            <button
+                                class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold"
+                                {% if not habitacion.disponible %}disabled
+                                class="w-full bg-gray-400 cursor-not-allowed text-white py-3 rounded" {% endif %}>
+                                {% if habitacion.disponible %}Reservar{% else %}No Disponible{% endif %}
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-16">
+                    <i class="fas fa-bed text-6xl text-gray-300 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">No se encontraron habitaciones</h3>
+                    <p class="text-gray-600">Intenta ajustar los filtros para ver más resultados.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function setFilter(name, value) {
+        document.getElementById(name + '-input').value = value;
+
+        // Resaltar botón activo
+        document.querySelectorAll('.filtro-btn').forEach(btn => {
+            btn.classList.remove('bg-brand-red', 'text-white');
+        });
+        event.target.classList.add('bg-brand-red', 'text-white');
+    }
+</script>
+{% endblock %}

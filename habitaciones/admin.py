@@ -12,9 +12,9 @@ class HuespedAdmin(admin.ModelAdmin):
 
 @admin.register(Habitacion)
 class HabitacionAdmin(admin.ModelAdmin):
-    list_display = ('numero',  'precio', 'disponible')
-    list_filter = ('disponible',)
-    search_fields = ('numero',)  # Solo campos de texto se pueden buscar
+    list_display = ('numero',  'precio', 'cantidad_personas', 'disponible', 'imagen')
+    list_filter = ('disponible', 'tiene_aire', 'cantidad_personas')
+    search_fields = ('numero',)
     ordering = ('numero',)
 
 @admin.register(Venta_Habitacion)
