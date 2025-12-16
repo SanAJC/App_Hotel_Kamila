@@ -160,7 +160,7 @@
 
                             <!-- Características -->
                             <div class="flex items-center gap-4 mb-6 text-gray-700 text-sm">
-                                <span><i class="fas fa-user"></i> {{ habitacion.cantidad_personas }} 
+                                <span><i class="fas fa-user"></i> {{ habitacion.cantidad_personas }}
                                     {% if habitacion.cantidad_personas == 1 %}
                                     persona
                                     {% else %}
@@ -174,12 +174,15 @@
                                 <span><i class="fas fa-wifi"></i> WiFi</span>
                             </div>
 
-                            <button
-                                class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold"
-                                {% if not habitacion.disponible %}disabled
-                                class="w-full bg-gray-400 cursor-not-allowed text-white py-3 rounded" {% endif %}>
-                                {% if habitacion.disponible %}Reservar{% else %}No Disponible{% endif %}
-                            </button>
+                            <a href="https://wa.me/573156579583?text=Hola,%20me%20gustar%C3%ADa%20reservar%20la%20Habitaci%C3%B3n%20{{ habitacion.numero }}%20(${{ habitacion.precio|floatformat:0 }}/noche)%20para%20{{ habitacion.cantidad_personas }}%20{% if habitacion.cantidad_personas == 1 %}persona{% else %}personas{% endif %}"
+                                target="_blank"
+                                class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold text-center block {% if not habitacion.disponible %}pointer-events-none bg-gray-400{% endif %}">
+                                {% if habitacion.disponible %}
+                                <i class="fab fa-whatsapp"></i> Reservar por WhatsApp
+                                {% else %}
+                                No Disponible
+                                {% endif %}
+                            </a>
                         </div>
                     </div>
                     {% endfor %}

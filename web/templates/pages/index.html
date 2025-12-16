@@ -105,7 +105,7 @@
 
                         <!-- Características -->
                         <div class="flex items-center gap-4 mb-6 text-gray-700 text-sm">
-                            <span><i class="fas fa-user"></i> {{ habitacion.cantidad_personas }} 
+                            <span><i class="fas fa-user"></i> {{ habitacion.cantidad_personas }}
                                 {% if habitacion.cantidad_personas == 1 %}
                                 persona
                                 {% else %}
@@ -122,12 +122,15 @@
                             <span><i class="fas fa-wifi"></i> WiFi</span>
                         </div>
 
-                        <button
-                            class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold"
-                            {% if not habitacion.disponible %}disabled
-                            style="background-color: #ccc; cursor: not-allowed;" {% endif %}>
-                            {% if habitacion.disponible %}Reservar{% else %}No Disponible{% endif %}
-                        </button>
+                        <a href="https://wa.me/573156579583?text=Hola,%20me%20gustar%C3%ADa%20reservar%20la%20Habitaci%C3%B3n%20{{ habitacion.numero }}%20(${{ habitacion.precio|floatformat:0 }}/noche)%20para%20{{ habitacion.cantidad_personas }}%20persona{{ habitacion.cantidad_personas|pluralize }}"
+                            target="_blank"
+                            class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold text-center block {% if not habitacion.disponible %}pointer-events-none bg-gray-400{% endif %}">
+                            {% if habitacion.disponible %}
+                            <i class="fab fa-whatsapp"></i> Reservar por WhatsApp
+                            {% else %}
+                            No Disponible
+                            {% endif %}
+                        </a>
                     </div>
                 </div>
                 {% endfor %}
@@ -205,10 +208,9 @@
                 <h3 class="text-2xl font-bold text-gray-800 mb-4">Nuestra Ubicación</h3>
                 <p class="text-gray-600 mb-4">Av. Principal 123, Centro Histórico</p>
 
-                <!-- Google Maps iframe como placeholder, reemplaza con tus coordenadas reales -->
                 <div class="rounded-lg overflow-hidden shadow-lg h-96">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d-74.0!3d4.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNMKwMzYnMDAuMCJOIDc0wrAwMCcwMC4wIlc!5e0!3m2!1ses!2s!4v1234567890"
+                        src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3916.7995!2d-74.1826!3d11.2180!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTHCsDEzJzA1LjEiTiA3NMKwMTAnNTcuNiJX!5e0!3m2!1ses!2sco!4v1734217500000!5m2!1ses!2sco"
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
                     </iframe>
                 </div>

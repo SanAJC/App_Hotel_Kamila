@@ -27,5 +27,6 @@ class Venta_HabitacionAdmin(admin.ModelAdmin):
     
     # Autocomplete para seleccionar huesped y habitación
     autocomplete_fields = ['huesped', 'habitacion']
+    actions = ['delete_selected']
     
 
