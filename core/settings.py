@@ -192,3 +192,6 @@ DAISY_SETTINGS = {
 
 #WhiteNoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+#CSRF
+CSRF_TRUSTED_ORIGINS = ['http://*','https://apphotelkamila-production.up.railway.app']
