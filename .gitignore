@@ -6,3 +6,5 @@ db.sqlite3
 venv/
 certs/
 staticfiles/
+runtime.txt
+Procfile
