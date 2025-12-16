@@ -22,6 +22,7 @@ class Habitacion(models.Model):
     disponible = models.BooleanField(default=True)
     cantidad_personas = models.IntegerField(default=2)
     imagen = models.ImageField(upload_to='habitaciones/', null=True, blank=True)
+    destacada = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Habitacion'

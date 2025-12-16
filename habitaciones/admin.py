@@ -12,10 +12,16 @@ class HuespedAdmin(admin.ModelAdmin):
 
 @admin.register(Habitacion)
 class HabitacionAdmin(admin.ModelAdmin):
-    list_display = ('numero',  'precio', 'cantidad_personas', 'disponible', 'imagen')
+    list_display = ('numero',  'precio', 'cantidad_personas', 'disponible')
     list_filter = ('disponible', 'tiene_aire', 'cantidad_personas')
     search_fields = ('numero',)
     ordering = ('numero',)
+
+    def mostrar_imagen(self, obj):
+        if obj.imagen:
+            return format_html('<img src="{}" width="50" height="50" />', obj.imagen.url)
+        return ""
+    mostrar_imagen.short_description = 'Imagen'
 
 @admin.register(Venta_Habitacion)
 class Venta_HabitacionAdmin(admin.ModelAdmin):

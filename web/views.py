@@ -2,8 +2,8 @@ from django.shortcuts import render
 from habitaciones.models import Habitacion
 
 def index(request):
-    # Obtener las primeras 3 habitaciones para mostrar en la landing
-    habitaciones = Habitacion.objects.all()[:3]
+    # Obtener las habitaciones destacadas
+    habitaciones = Habitacion.objects.filter(destacada=True)[:3]
     return render(request, 'pages/index.html', {
         'title': 'Inicio',
         'habitaciones': habitaciones,
