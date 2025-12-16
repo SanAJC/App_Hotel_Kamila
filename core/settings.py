@@ -126,17 +126,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+# Configuración de archivos estáticos
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Aquí se recopilarán los archivos estáticos
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static')  
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Media files (Uploaded files)
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # -> /app/media en contenedor
-MEDIA_URL = '/media/'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -190,8 +187,6 @@ DAISY_SETTINGS = {
     },
 }
 
-#WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #CSRF
 CSRF_TRUSTED_ORIGINS = ['http://*','https://apphotelkamila-production.up.railway.app']
