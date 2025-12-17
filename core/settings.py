@@ -193,4 +193,4 @@ DAISY_SETTINGS = {
 
 
 #CSRF
-CSRF_TRUSTED_ORIGINS = ['http://*','https://apphotelkamila-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['http://*','https://apphotelkamila-production.up.railway.app','https://hotelkamila.co']
