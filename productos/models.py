@@ -33,7 +33,12 @@ class Venta_Producto(models.Model):
         verbose_name_plural = 'Ventas Productos'
 
     def __str__(self):
-        return f"{self.producto} - {self.cantidad} - {self.precio_pagado} - {self.metodo_pago} - {self.fecha_venta}"
+        if self.huesped and self.producto:
+            return f"{self.producto} - {self.cantidad} - {self.precio_pagado} - {self.metodo_pago} - {self.fecha_venta}"
+        elif self.producto:
+            return f"{self.producto} - {self.cantidad} - {self.precio_pagado} - {self.metodo_pago} - {self.fecha_venta}"
+        else:
+            return f"{self.fecha_venta} - {self.cantidad} - {self.precio_pagado} - {self.metodo_pago}"
     
     def save(self, *args, **kwargs):
         if self.cantidad > self.producto.cantidad:

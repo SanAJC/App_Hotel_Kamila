@@ -56,7 +56,12 @@ class Venta_Habitacion(models.Model):
     fecha_salida = models.DateTimeField(null=True, blank=True) 
 
     def __str__(self):
-        return f"{self.huesped} - {self.habitacion} - {self.fecha_entrada} - {self.fecha_salida} - {self.precio_pagado} - {self.metodo_pago}"
+        if self.huesped and self.habitacion:
+            return f"{self.huesped} - {self.habitacion} - {self.fecha_entrada} - {self.fecha_salida} - {self.precio_pagado} - {self.metodo_pago}"
+        elif self.habitacion:
+            return f"{self.habitacion} - {self.fecha_entrada} - {self.fecha_salida} - {self.precio_pagado} - {self.metodo_pago}"
+        else:
+            return f"{self.fecha_entrada} - {self.fecha_salida} - {self.precio_pagado} - {self.metodo_pago}"
 
     class Meta:
         verbose_name = 'Venta Habitacion'
