@@ -17,7 +17,11 @@ class Orden_Lavanderia(models.Model):
         verbose_name_plural = 'Ordenes Lavanderia'
 
     def __str__(self):
-        return f"Orden de lavandería para {self.huesped.primer_nombre} {self.huesped.primer_apellido} ({self.cantidad_prendas} prendas) - {self.valor_total} - {self.estado}"
+        if self.huesped:
+            huesped_nombre = f"{self.huesped.primer_nombre} {self.huesped.primer_apellido}"
+        else:
+            huesped_nombre = "Sin huésped"
+        return f"Orden de lavandería para {huesped_nombre} ({self.cantidad_prendas} prendas) - {self.valor_total} - {self.estado}"
 
     def save(self, *args, **kwargs):
         self.valor_total = self.cantidad_prendas * self.valor_por_prenda
