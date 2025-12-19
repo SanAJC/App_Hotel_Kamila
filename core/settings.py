@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'productos',
     'lavanderia',
     'web',
+    'gastos',
 
 ]
 
@@ -186,6 +187,11 @@ DAISY_SETTINGS = {
             'icon': 'fa-solid fa-shirt',
             'name': 'Lavanderia',
             'divider_title': 'Lavanderia',
+        },
+        'gastos': {
+            'icon': 'fa-solid fa-money-bill',
+            'name': 'Gastos',
+            'divider_title': 'Gastos',
         },
 
     },
