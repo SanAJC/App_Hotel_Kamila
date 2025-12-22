@@ -27,7 +27,7 @@
 <section id="inicio" class="relative h-screen flex items-center justify-center text-white">
 
     <div class="absolute inset-0 hero-overlay">
-        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920" alt="Hotel Kamila"
+        <img src="{% static 'images/bannerhotel.jpeg' %}" alt="Hotel Kamila"
             class="w-full h-full object-cover">
     </div>
 
@@ -122,7 +122,7 @@
                             <span><i class="fas fa-wifi"></i> WiFi</span>
                         </div>
 
-                        <a href="https://wa.me/573206482231?text=Hola,%20me%20gustar%C3%ADa%20reservar%20la%20Habitaci%C3%B3n%20{{ habitacion.numero }}%20(${{ habitacion.precio|floatformat:0 }}/noche)%20para%20{{ habitacion.cantidad_personas }}%20persona{{ habitacion.cantidad_personas|pluralize }}"
+                        <a href="https://wa.me/573206482231?text=Hola,%20me%20gustar%C3%ADa%20reservar%20la%20Habitaci%C3%B3n%20{{ habitacion.numero }}"
                             target="_blank"
                             class="w-full bg-brand-red text-white py-3 rounded hover:bg-red-700 transition font-semibold text-center block {% if not habitacion.disponible %}pointer-events-none bg-gray-400{% endif %}">
                             <!-- {% if habitacion.disponible %}
@@ -207,13 +207,10 @@
             <!-- Mapa -->
             <div>
                 <h3 class="text-2xl font-bold text-gray-800 mb-4">Nuestra Ubicación</h3>
-                <p class="text-gray-600 mb-4">Av. Principal 123, Centro Histórico</p>
+                <p class="text-gray-600 mb-4">Concepción 3 Mz A1 Local 13</p>
 
                 <div class="rounded-lg overflow-hidden shadow-lg h-96">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3916.7995!2d-74.1826!3d11.2180!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTHCsDEzJzA1LjEiTiA3NMKwMTAnNTcuNiJX!5e0!3m2!1ses!2sco!4v1734217500000!5m2!1ses!2sco"
-                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-                    </iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d244.59933665543872!2d-74.18276511941602!3d11.217985962360874!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef4f5b07889f073%3A0xa022265dcdd087b!2sHotel%20Kamila!5e0!3m2!1ses!2sco!4v1766369581905!5m2!1ses!2sco" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
