@@ -27,15 +27,24 @@ def dashboard_context(request):
         context['habitaciones_ocupadas'] = habitaciones_stats.get('ocupadas', 0)
         context['total_habitaciones'] = habitaciones_stats.get('total', 0)
         
-        # Ventas del día - suma de ventas de habitaciones del día actual
-        hoy = timezone.now().date()
+        hoy_inicio = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        hoy_fin = hoy_inicio + timedelta(days=1)
+        
+        from django.db.models.functions import Coalesce
+        
         ventas_hoy = Venta_Habitacion.objects.filter(
-            fecha_entrada__date=hoy
+            fecha_entrada__gte=hoy_inicio,  # Desde las 00:00 de hoy
+            fecha_entrada__lt=hoy_fin        # Hasta las 23:59 de hoy
         ).aggregate(
-            total=Sum('precio_pagado')
+            total_precio=Coalesce(Sum('precio_pagado'), Decimal('0')),
+            total_extras=Coalesce(Sum('extras'), Decimal('0'))
         )
         
-        context['ventas_del_dia'] = ventas_hoy.get('total') or Decimal('0')
+        # Total = precio_pagado + extras
+        total_ventas = (ventas_hoy.get('total_precio', Decimal('0')) + 
+                       ventas_hoy.get('total_extras', Decimal('0')))
+        
+        context['ventas_del_dia'] = total_ventas
         
     except Exception as e:
         # Si hay algún error, devolver valores por defecto
