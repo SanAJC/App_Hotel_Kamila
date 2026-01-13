@@ -124,7 +124,14 @@
                                 class="w-full h-64 object-cover">
                             {% else %}
                             <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600"
-                                alt="Habitación {{ habitacion.numero }}" class="w-full h-64 object-cover">
+                                alt="Imagen no disponible - Habitación {{ habitacion.numero }}" 
+                                class="w-full h-64 object-cover opacity-60">
+                            <div class="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-40">
+                                <div class="text-center text-white">
+                                    <i class="fas fa-image text-4xl mb-2"></i>
+                                    <p class="text-sm">Imagen no disponible</p>
+                                </div>
+                            </div>
                             {% endif %}
 
                             <!-- <span

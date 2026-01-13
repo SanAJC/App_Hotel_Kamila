@@ -10,8 +10,8 @@ def index(request):
     })
 
 def habitaciones_listado(request):
-    # Obtener todas las habitaciones
-    habitaciones = Habitacion.objects.all()
+    # Obtener todas las habitaciones ordenadas: primero las que tienen imagen, luego por número
+    habitaciones = Habitacion.objects.all().order_by('-imagen', 'numero')
     
     # Filtros
     capacidad = request.GET.get('capacidad')
